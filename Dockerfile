@@ -20,10 +20,11 @@ RUN npm run build
 FROM nginx:alpine
 
 # Copiar los archivos compilados desde la etapa de construcción
-COPY --from=build /app/dist /usr/share/nginx/html
+# Cambia dist a .next si usas Next.js y la aplicación construye en .next en lugar de dist
+COPY --from=build /app/.next /usr/share/nginx/html
 
-# Exponer el puerto donde correrá Nginx
-EXPOSE 80
+# Exponer el puerto donde correrá Nginx (actualizado a 3000)
+EXPOSE 3000
 
 # Comando para iniciar Nginx
 CMD ["nginx", "-g", "daemon off;"]
