@@ -18,14 +18,11 @@ RUN npm run build
 # Etapa de producción
 FROM nginx:alpine
 
-# Copia el archivo de configuración personalizado de Nginx
-COPY nginx.conf /etc/nginx/nginx.conf
-
-# Copia los archivos compilados al contenedor de Nginx
-COPY --from=build /app/.next /usr/share/nginx/html
-
-# Expone el puerto 3000
+# Exponer el puerto 3000
 EXPOSE 3000
 
-# Inicia Nginx
-CMD ["nginx", "-g", "daemon off;"]
+# Copia los archivos generados a la carpeta de Nginx
+COPY --from=build /app/.next /usr/share/nginx/html
+
+# Configura nginx para servir en el puerto 3000
+CMD ["nginx", "-g", "daemon off;", "-p", "3000"]
