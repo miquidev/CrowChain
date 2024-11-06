@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   pipeline-app:
-    image: mqcdev/as221s6_t09_crowchain:v2.1  # Imagen de Docker Hub
+    image: mqcdev/as221s6_t09_crowchain:v3.0  # Imagen de Docker Hub
     container_name: pipeline_app
     ports:
       - "3000:3000"  # Mapeo del puerto 3000 en el contenedor al puerto 3000 en tu máquina
