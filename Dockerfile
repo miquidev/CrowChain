@@ -16,15 +16,17 @@ COPY . .
 # Construir la aplicación para producción
 RUN npm run build
 
-# Etapa 2: Servir la aplicación utilizando un servidor web ligero
-FROM nginx:alpine
+# Etapa 2: Servir la aplicación con Nginx o directamente desde Next.js
+FROM node:18 AS production
 
-# Copiar los archivos compilados desde la etapa de construcción
-# Cambia dist a .next si usas Next.js y la aplicación construye en .next en lugar de dist
-COPY --from=build /app/.next /usr/share/nginx/html
+# Establecer el directorio de trabajo
+WORKDIR /app
 
-# Exponer el puerto donde correrá Nginx (actualizado a 3000)
+# Copiar los archivos necesarios desde la etapa de construcción
+COPY --from=build /app /app
+
+# Exponer el puerto donde Next.js correrá
 EXPOSE 3000
 
-# Comando para iniciar Nginx
-CMD ["nginx", "-g", "daemon off;"]
+# Iniciar la aplicación con Next.js en modo producción
+CMD ["npm", "run", "start"]
