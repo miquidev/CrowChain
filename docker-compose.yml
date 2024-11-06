@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   pipeline-app:
-    image: mqcdev/as221s6_t09_crowchain:v1.3
+    image: mqcdev/as221s6_t09_crowchain:v1.6
     container_name: pipeline_app
     ports:
       - "3000:3000"

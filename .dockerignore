@@ -5,4 +5,3 @@ dist
 .vscode
 Dockerfile
 .dockerignore
-.next

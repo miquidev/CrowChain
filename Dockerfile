@@ -1,26 +1,28 @@
-# Etapa de construcción
+# Etapa de compilación
 FROM node:18 AS build
 
 WORKDIR /app
 
-# Copiar archivos de configuración y dependencias
+# Copia solo los archivos de dependencias primero
 COPY package.json package-lock.json ./
 
-# Instalar dependencias
+# Instala las dependencias
 RUN npm install
 
-# Copiar el resto de los archivos y construir la aplicación
+# Copia el resto del código de la aplicación
 COPY . .
-RUN npm run build  # Esto generará la carpeta .next
+
+# Compila el proyecto para generar la carpeta .next
+RUN npm run build
 
 # Etapa de producción
 FROM nginx:alpine
 
-# Copiar la carpeta .next generada en la etapa de construcción a Nginx
+# Copia los archivos compilados al contenedor de Nginx
 COPY --from=build /app/.next /usr/share/nginx/html
 
-# Exponer el puerto 80 en lugar de 3000, que es el puerto por defecto de Nginx
-EXPOSE 80
+# Expone el puerto 3000
+EXPOSE 3000
 
-# Iniciar Nginx
+# Inicia Nginx
 CMD ["nginx", "-g", "daemon off;"]
