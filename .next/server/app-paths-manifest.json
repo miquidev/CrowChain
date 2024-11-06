@@ -1,4 +1,6 @@
 {
   "/page": "app/page.js",
-  "/favicon.ico/route": "app/favicon.ico/route.js"
+  "/campaign/[campaignAddress]/page": "app/campaign/[campaignAddress]/page.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/dashboard/[walletAddress]/page": "app/dashboard/[walletAddress]/page.js"
 }
