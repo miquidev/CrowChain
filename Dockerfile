@@ -18,6 +18,9 @@ RUN npm run build
 # Etapa de producción
 FROM nginx:alpine
 
+# Copia el archivo de configuración personalizado de Nginx
+COPY nginx.conf /etc/nginx/nginx.conf
+
 # Copia los archivos compilados al contenedor de Nginx
 COPY --from=build /app/.next /usr/share/nginx/html
 
