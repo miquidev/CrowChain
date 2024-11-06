@@ -1,28 +1,29 @@
-# Etapa de compilación
+# Etapa 1: Construcción
 FROM node:18 AS build
 
+# Establecer el directorio de trabajo
 WORKDIR /app
 
-# Copia solo los archivos de dependencias primero
+# Copiar package.json y package-lock.json para instalar dependencias
 COPY package.json package-lock.json ./
 
-# Instala las dependencias
+# Instalar las dependencias
 RUN npm install
 
-# Copia el resto del código de la aplicación
+# Copiar todos los archivos del proyecto
 COPY . .
 
-# Compila el proyecto para generar la carpeta .next
+# Construir la aplicación para producción
 RUN npm run build
 
-# Etapa de producción
+# Etapa 2: Servir la aplicación utilizando un servidor web ligero
 FROM nginx:alpine
 
-# Exponer el puerto 3000
-EXPOSE 3000
+# Copiar los archivos compilados desde la etapa de construcción
+COPY --from=build /app/dist /usr/share/nginx/html
 
-# Copia los archivos generados a la carpeta de Nginx
-COPY --from=build /app/.next /usr/share/nginx/html
+# Exponer el puerto donde correrá Nginx
+EXPOSE 80
 
-# Configura nginx para servir en el puerto 3000
-CMD ["nginx", "-g", "daemon off;", "-p", "3000"]
+# Comando para iniciar Nginx
+CMD ["nginx", "-g", "daemon off;"]
