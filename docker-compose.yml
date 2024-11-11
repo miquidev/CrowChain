@@ -2,11 +2,12 @@ version: '3.8'
 
 services:
   pipeline-app:
-    image: mqcdev/as221s6_t09_crowchain:v3.0  # Imagen de Docker Hub
+    image: mqcdev/as221s6_t09_crowchain:v3.0  
     container_name: pipeline_app
     ports:
-      - "3000:3000"  # Mapeo del puerto 3000 en el contenedor al puerto 3000 en tu máquina
-    restart: always  # Reinicia el contenedor automáticamente si se detiene
+      - "3000:3000"  
+    restart: always  
     environment:
-      - NODE_ENV=production  # Establece el entorno de producción
-    command: ["npm", "run", "start"]  # Comando para iniciar la aplicación Next.js en producción
+      - NEXT_PUBLIC_TEMPLATE_CLIENT_ID=4389436239beaeb4a86883310f4196a3  
+      - CROWDFUNDING_FACTORY=0xf487e9e0A585C4900Ce25EA5b93386e7111ccD11
+    command: ["npm", "run", "start"]  
